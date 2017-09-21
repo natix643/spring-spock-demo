@@ -21,6 +21,9 @@ class HelloControllerTest extends Specification {
     HelloController mockController
 
     def 'GET /hello should call hello()'() {
+        given:
+        1 * mockController.hello() >> 'hello, test'
+
         when:
         def response = mvc.perform(get('/hello'))
                 .andReturn().response
@@ -28,9 +31,6 @@ class HelloControllerTest extends Specification {
         then:
         response.status == 200
         response.contentAsString == 'hello, test'
-
-        and:
-        1 * mockController.hello() >> 'hello, test'
     }
 
     @TestConfiguration
